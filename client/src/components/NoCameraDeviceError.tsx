@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-const Camera = () => {
+const NoCameraDeviceError = () => {
   return (
     <View>
-      <Text>Camera</Text>
+      <Text>Hi</Text>
     </View>
   );
 };
 
-export default Camera;
+export default NoCameraDeviceError;

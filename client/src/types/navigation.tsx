@@ -4,7 +4,6 @@ import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 // Define the routes and parameters for each tab
 export type RootTabParamList = {
   Home: undefined;
-  Camera: undefined;
   Account: undefined;
 };
 
@@ -12,10 +11,6 @@ export type RootTabParamList = {
 export type HomeTabNavigationProp = BottomTabNavigationProp<
   RootTabParamList,
   'Home'
->;
-export type CameraTabNavigationProp = BottomTabNavigationProp<
-  RootTabParamList,
-  'Camera'
 >;
 export type AccountTabNavigationProp = BottomTabNavigationProp<
   RootTabParamList,
