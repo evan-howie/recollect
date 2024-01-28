@@ -1,13 +1,14 @@
 import express from "express";
 import router from "./router.js";
-import cors from "cors";
+import morgan from "morgan";
 
 const app = express();
 
-const port = 3000;
+const port = 80;
 
+app.use(morgan("dev"));
 app.use(router);
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server listening on port ${port}`);
 });
