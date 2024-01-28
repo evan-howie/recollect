@@ -44,7 +44,6 @@ const HomeCamera = () => {
         });
 
         savePhotoToCameraRoll(`file://${photo.path}`);
-        console.warn(photo);
       } catch (error) {
         console.error(error);
         // Handle any errors (e.g., camera not ready or permissions issues)

@@ -1,10 +1,25 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {StyleSheet} from 'react-native';
 import LoginBackgroundSVG from '../../components/LoginBackgroundSVG';
+import axios from '../../axios';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Wrap = ({navigation}) => {
-  const [numPhotos, setNumPhotos] = useState(35);
+  const [numPhotos, setNumPhotos] = useState(0);
+
+  useFocusEffect(
+    useCallback(() => {
+      axios
+        .get('/count')
+        .then(res => {
+          setNumPhotos(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }, []),
+  );
 
   function onWrap() {
     navigation.navigate('WrapList');

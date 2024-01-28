@@ -15,7 +15,6 @@ const savePhotoToCameraRoll: SavePhotoToCameraRoll = async photoUri => {
     });
 
     // .catch(err => console.log(err));
-    console.log('Photo saved to camera roll!');
   } catch (error) {
     console.error('Error saving photo:', error);
   }
