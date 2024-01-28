@@ -2,7 +2,8 @@ import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from './screens/Home';
-import Profile from './screens/Profile';
+import Wrap from './screens/Wrap/Wrap';
+import WrapList from './screens/Wrap/WrapList';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './screens/Login';
 
@@ -18,10 +19,20 @@ function MainAppTabs() {
         },
       }}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="WrapStack" component={WrapStack} />
     </Tab.Navigator>
   );
 }
+
+function WrapStack() {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Wrap" component={Wrap} />
+      <Stack.Screen name="WrapList" component={WrapList} />
+    </Stack.Navigator>
+  );
+}
+
 function App() {
   return (
     <NavigationContainer>

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 40,
     alignSelf: 'center',
   },
 });

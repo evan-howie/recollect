@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import {StyleSheet} from 'react-native';
 import LoginBackgroundSVG from '../components/LoginBackgroundSVG';
 import {LoginScreenNavigationProp} from '../types/navigation';
+import recollect from '../assets/recollect.png';
 
 const Login: React.FC<LoginScreenNavigationProp> = ({navigation}) => {
   function onLogin() {
@@ -36,6 +37,7 @@ const Login: React.FC<LoginScreenNavigationProp> = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
+      <Image source={recollect} style={styles.recollectIcon} />
     </View>
   );
 };
@@ -103,6 +105,13 @@ const styles = StyleSheet.create({
   },
   signupButtonText: {
     color: '#7766C4',
+  },
+  recollectIcon: {
+    position: 'absolute',
+    bottom: 55,
+    alignSelf: 'center',
+    width: 80,
+    height: 80,
   },
 });
 

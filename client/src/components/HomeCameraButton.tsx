@@ -1,16 +1,15 @@
 import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {StyleSheet} from 'react-native';
+import HomeCameraButtonSVG from './HomeCameraButtonSVG';
 
 type Props = {
   onPress: () => void;
 };
 const HomeCameraButton: React.FC<Props> = ({onPress}) => {
   return (
-    <TouchableOpacity
-      style={{...styles.fit, ...styles.button}}
-      onPress={onPress}>
-      <View style={styles.fill} />
+    <TouchableOpacity onPress={onPress}>
+      <HomeCameraButtonSVG />
     </TouchableOpacity>
   );
 };
