@@ -2,6 +2,8 @@ import { Router } from "express";
 import multer from "multer";
 import path from "path";
 import callPythonScript from "./utils/callPythonScript.js";
+import db from "./db.js";
+import getDateTimeString from "./utils/getDateTimeString.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -31,7 +33,13 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     `${req.file.path}`,
   ]).catch((error) => console.error("Error: " + error));
 
-  res.send(data);
+  const docRef = await db.collection("photos").add({
+    img_path: req.file.path,
+    names: data,
+    datetime: getDateTimeString(),
+  });
+
+  res.json(docRef.id);
 });
 
 export default router;
