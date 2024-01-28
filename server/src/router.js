@@ -1,23 +1,11 @@
 import { Router } from "express";
-import multer from "multer";
 import path from "path";
 import callPythonScript from "./utils/callPythonScript.js";
 import db from "./db.js";
 import getDateTimeString from "./utils/getDateTimeString.js";
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Destination folder
-  },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-    ); // Filename
-  },
-});
-
-export const upload = multer({ storage: storage });
+import express from "express";
+import { writeFile } from "fs/promises";
+import { v4 as uuid } from "uuid";
 
 const router = Router();
 
@@ -25,21 +13,29 @@ router.get("/", async (req, res) => {
   res.send("Hello World!");
 });
 
-router.post("/upload", upload.single("file"), async (req, res) => {
-  if (!req.file) return res.status(400).send("bad input");
-
-  const data = await callPythonScript([
-    "./scripts/face.py",
-    `${req.file.path}`,
-  ]).catch((error) => console.error("Error: " + error));
-
-  const docRef = await db.collection("photos").add({
-    img_path: req.file.path,
-    names: data,
-    datetime: getDateTimeString(),
-  });
-
-  res.json(docRef.id);
+router.post("/", async (req, res) => {
+  res.send("Hello Worl!");
 });
+
+router.post(
+  "/upload",
+  express.raw({ type: "*/*", limit: "1000mb" }),
+  async (req, res) => {
+    const path = `uploads/${uuid()}.jpg`;
+    await writeFile(path, req.body);
+
+    const data = await callPythonScript(["./scripts/face.py", `${path}`]).catch(
+      (error) => console.error("Error: " + error)
+    );
+
+    const docRef = await db.collection("photos").add({
+      img_path: path,
+      names: data,
+      datetime: getDateTimeString(),
+    });
+
+    res.json(docRef.id);
+  }
+);
 
 export default router;

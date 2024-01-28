@@ -7,9 +7,14 @@ const savePhotoToCameraRoll: SavePhotoToCameraRoll = async photoUri => {
   try {
     // Save the photo
     await CameraRoll.saveAsset(photoUri, {type: 'photo'});
-    console.warn(await axios.get('/'));
-    // const result = await fetch(photoUri);
-    // const data = await result.blob();
+    const result = await fetch(photoUri);
+    const data = await result.arrayBuffer();
+
+    await axios.post('/upload', data, {
+      headers: {'Content-Type': 'image/jpeg'},
+    });
+
+    // .catch(err => console.log(err));
     console.log('Photo saved to camera roll!');
   } catch (error) {
     console.error('Error saving photo:', error);
