@@ -38,4 +38,33 @@ router.post(
   }
 );
 
+router.get("/count", async (req, res) => {
+  const count = await db
+    .collection("photos")
+    .get()
+    .then((snap) => snap.size);
+  res.json(count);
+});
+
+router.get("/bestFriend/:who", async (req, res) => {
+  const { who } = req.params;
+  const bestFriend = await db
+    .collection("photos")
+    .where("names", "array-contains", who)
+    .get()
+    .then((snap) => {
+      const counts = {};
+      snap.forEach((doc) => {
+        doc.data().names.forEach((name) => {
+          if (name !== of) {
+            counts[name] = counts[name] ? counts[name] + 1 : 1;
+          }
+        });
+      });
+      const max = Math.max(...Object.values(counts));
+      return Object.keys(counts).find((key) => counts[key] === max);
+    });
+  res.json(bestFriend);
+}
+
 export default router;
