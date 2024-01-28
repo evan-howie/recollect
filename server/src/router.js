@@ -56,7 +56,7 @@ router.get("/bestFriend/:who", async (req, res) => {
       const counts = {};
       snap.forEach((doc) => {
         doc.data().names.forEach((name) => {
-          if (name !== of) {
+          if (name !== who) {
             counts[name] = counts[name] ? counts[name] + 1 : 1;
           }
         });
@@ -65,6 +65,6 @@ router.get("/bestFriend/:who", async (req, res) => {
       return Object.keys(counts).find((key) => counts[key] === max);
     });
   res.json(bestFriend);
-}
+});
 
 export default router;
